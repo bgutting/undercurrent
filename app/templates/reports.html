@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Reports</h1>
+{% if reports %}
+<ul class="list">
+  {% for r in reports %}
+  <li><a href="/reports/{{ r.id }}">{{ r.period_start.strftime('%b %d') }} – {{ r.period_end.strftime('%b %d, %Y') }}</a>
+      <span class="muted">written {{ r.created_at | ago }}</span></li>
+  {% endfor %}
+</ul>
+{% else %}<p class="muted">None yet.</p>{% endif %}
+<form method="post" action="/actions/report" class="actions"><button>Write a report now</button></form>
+{% endblock %}

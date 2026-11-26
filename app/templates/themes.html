@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Themes</h1>
+<p class="note">How often each theme was tagged, week by week, newest on the left. Darker means busier.
+  {% if history < 4 %}<strong>Only about {{ history }} week(s) of history so far.</strong>{% endif %}</p>
+<div class="heatwrap">
+<table class="heat">
+  <thead><tr><th>Theme</th>
+    {% for w in weeks %}<th class="num small">{{ 'this wk' if loop.first else w.strftime('%b %d') }}</th>{% endfor %}
+    <th class="num small">Companies, last 2 wks</th></tr></thead>
+  <tbody>
+  {% for d in table %}
+    <tr>
+      <td><a href="/entries?theme={{ d.theme }}" title="{{ THEMES[d.theme] }}">{{ d.theme }}</a></td>
+      {% for c in d.counts %}
+        <td class="num cell" style="--a: {{ (c / peak) | round(2) }}">{{ c if c else '' }}</td>
+      {% endfor %}
+      <td class="num">{{ d.breadth or '' }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% if rising %}
+<h2>Rising</h2>
+<ul class="list">
+{% for r in rising %}<li><a href="/entries?theme={{ r.theme }}">{{ r.theme }}</a>: {{ r.recent }} in the last two weeks vs. a usual {{ r.baseline }}, across {{ r.breadth }} compan{{ 'y' if r.breadth == 1 else 'ies' }}</li>{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

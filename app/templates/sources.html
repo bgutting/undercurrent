@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Sources</h1>
+<p class="note">Checked every hour. A red row means the last check failed; the message says why.
+  {% if queue is not none %}Jobs in the queue right now: {{ queue }}.{% endif %}</p>
+<table class="sources">
+  <thead><tr><th>Source</th><th>Kind</th><th>Last checked</th><th class="num">New last check</th><th class="num">7 days</th><th class="num">90 days</th><th></th></tr></thead>
+  <tbody>
+  {% for s in rows %}
+    <tr class="{{ 'bad' if s.state.last_error else '' }}">
+      <td><a href="/entries?source={{ s.key }}">{{ s.name }}</a><div class="muted small">{{ s.layer }}</div></td>
+      <td class="muted">{{ s.kind }}</td>
+      <td>{{ s.state.last_checked | ago }}
+        {% if s.state.last_error %}<div class="error">{{ s.state.last_error }}</div>{% endif %}</td>
+      <td class="num">{{ s.state.last_new if s.state.last_checked else '–' }}</td>
+      <td class="num">{{ s.counts.week }}</td>
+      <td class="num">{{ s.counts.quarter }}</td>
+      <td><form method="post" action="/actions/check/{{ s.key }}"><button class="small">Check now</button></form></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<form method="post" action="/actions/check-all" class="actions"><button>Check every source now</button></form>
+{% endblock %}

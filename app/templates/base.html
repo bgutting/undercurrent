@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Undercurrent{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/">Undercurrent</a>
+    <nav>
+      <a href="/" {% if nav in ('report','empty') %}class="on"{% endif %}>Latest</a>
+      <a href="/reports" {% if nav == 'reports' %}class="on"{% endif %}>Reports</a>
+      <a href="/themes" {% if nav == 'themes' %}class="on"{% endif %}>Themes</a>
+      <a href="/entries" {% if nav == 'entries' %}class="on"{% endif %}>Entries</a>
+      <a href="/sources" {% if nav == 'sources' %}class="on"{% endif %}>Sources</a>
+    </nav>
+  </header>
+  {% if msg %}<div class="flash">{{ msg }}</div>{% endif %}
+  <main>{% block content %}{% endblock %}</main>
+</body>
+</html>

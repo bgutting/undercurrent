@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="report">
+  <p class="eyebrow">Getting started</p>
+  <h1>No report yet</h1>
+  {% if total == 0 %}
+    <p>Undercurrent is collecting the last few months from each source. The first collection takes a few minutes. When it's done, the first report is written automatically.</p>
+  {% elif unannotated %}
+    <p>{{ total }} entries collected. {{ unannotated }} are still being read and tagged. The first report is written as soon as tagging is done.</p>
+  {% else %}
+    <p>{{ total }} entries collected and tagged. The first report should appear shortly. You can also start one yourself.</p>
+  {% endif %}
+  {% if queue is not none %}<p class="muted">Jobs waiting in the queue: {{ queue }}. Refresh to see progress.</p>{% endif %}
+  <p><a href="/sources">See how each source is doing →</a></p>
+  <form method="post" action="/actions/report" class="actions"><button>Write a report now</button></form>
+</article>
+{% endblock %}

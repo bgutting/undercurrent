@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Entries</h1>
+<form method="get" class="filters">
+  <select name="source" onchange="this.form.submit()">
+    <option value="">All sources</option>
+    {% for s in sources %}<option value="{{ s.key }}" {% if source == s.key %}selected{% endif %}>{{ s.name }}</option>{% endfor %}
+  </select>
+  <select name="theme" onchange="this.form.submit()">
+    <option value="">All themes</option>
+    {% for t in THEMES %}<option value="{{ t }}" {% if theme == t %}selected{% endif %}>{{ t }}</option>{% endfor %}
+  </select>
+</form>
+<ul class="entries">
+  {% for e in rows %}
+  <li class="imp{{ e.importance or 0 }}">
+    <div class="line1">
+      <span class="src">{{ e.source_name }}</span>
+      <span class="muted small">{{ e.when.strftime('%b %d') }}{% if e.kind %} · {{ e.kind }}{% endif %}</span>
+    </div>
+    <a class="head" href="{{ e.url or '#' }}" target="_blank" rel="noopener">{{ e.headline or e.title }}</a>
+    {% if e.summary %}<p>{{ e.summary }}</p>{% elif not e.annotated_at %}<p class="muted small">Not tagged yet.</p>{% endif %}
+    {% if e.themes %}<div class="tags">{% for t in e.themes %}<a href="/entries?theme={{ t }}">{{ t }}</a>{% endfor %}</div>{% endif %}
+  </li>
+  {% else %}
+  <li class="muted">Nothing here yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,65 @@
+# Render Blueprint: describes every piece of Undercurrent so Render can
+# create them all at once. Times in cron schedules are UTC.
+
+services:
+  # The website.
+  - type: web
+    name: undercurrent-web
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.web:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase: { name: undercurrent-db, property: connectionString }
+      - key: REDIS_URL
+        fromService: { type: keyvalue, name: undercurrent-queue, property: connectionString }
+      - key: SITE_PASSWORD
+        sync: false          # Render asks you to choose one when you create the Blueprint
+
+  # The background worker: does the fetching, tagging and report writing.
+  - type: worker
+    name: undercurrent-worker
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m app.worker
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase: { name: undercurrent-db, property: connectionString }
+      - key: REDIS_URL
+        fromService: { type: keyvalue, name: undercurrent-queue, property: connectionString }
+      - key: ANTHROPIC_API_KEY
+        sync: false          # Render asks you to paste it when you create the Blueprint
+
+  # Every hour: queue a check of every source.
+  - type: cron
+    name: undercurrent-hourly
+    runtime: python
+    schedule: "7 * * * *"
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m app.enqueue ingest
+    envVars:
+      - key: REDIS_URL
+        fromService: { type: keyvalue, name: undercurrent-queue, property: connectionString }
+
+  # Mondays 13:00 UTC (8am Eastern in winter): queue the weekly report.
+  - type: cron
+    name: undercurrent-weekly
+    runtime: python
+    schedule: "0 13 * * 1"
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m app.enqueue report
+    envVars:
+      - key: REDIS_URL
+        fromService: { type: keyvalue, name: undercurrent-queue, property: connectionString }
+
+  # The job queue (Render Key Value, Redis-compatible). Private network only.
+  - type: keyvalue
+    name: undercurrent-queue
+    plan: free
+    ipAllowList: []
+
+databases:
+  - name: undercurrent-db
+    plan: free

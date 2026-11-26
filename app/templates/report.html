@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Undercurrent · {{ stats.period }}{% endblock %}
+{% block content %}
+<article class="report">
+  <p class="eyebrow">Weekly report · {{ stats.period }}</p>
+  <p class="meta">{{ stats.entry_count }} entries from {{ active }} companies
+    {% if stats.dropped_threads %} · {{ stats.dropped_threads }} unsupported thread{{ 's' if stats.dropped_threads != 1 }} removed{% endif %}</p>
+
+  <div class="prose">{{ body | safe }}</div>
+
+  <section class="stats">
+    <h2>Themes on the move</h2>
+    <p class="note">Counted from the data, not written by the model. Last two weeks compared with the six before.
+      {% if stats.history_weeks is defined and stats.history_weeks < 4 %}<strong>Only about {{ stats.history_weeks }} week(s) of history so far, so treat these as weak signals.</strong>{% endif %}</p>
+    {% if stats.rising %}
+    <table>
+      <thead><tr><th>Theme</th><th class="num">Last 2 wks</th><th class="num">Usual</th><th class="num">Change</th><th>Companies</th></tr></thead>
+      <tbody>
+      {% for r in stats.rising %}
+        <tr><td><a href="/entries?theme={{ r.theme }}">{{ r.theme }}</a></td><td class="num">{{ r.recent }}</td>
+            <td class="num">{{ r.baseline }}</td><td class="num">×{{ r.ratio }}</td>
+            <td>{{ r.breadth }} · <span class="muted">{{ r.sources | join(', ') }}</span></td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}<p class="muted">No theme is unusually busy right now.</p>{% endif %}
+
+    {% if stats.quiet %}
+    <h2>Quiet this week</h2>
+    <p class="muted">{{ stats.quiet | join(', ') }}</p>
+    {% endif %}
+  </section>
+
+  <form method="post" action="/actions/report" class="actions">
+    <button>Write a fresh report now</button>
+  </form>
+</article>
+{% endblock %}

@@ -1,0 +1,78 @@
+:root {
+  --ink: #1b1d1f;
+  --muted: #6b7076;
+  --rule: #e4e2dd;
+  --paper: #fbfaf7;
+  --accent: #1f5f8b;
+  --bad: #b3261e;
+  --heat: 31, 95, 139;
+  --serif: "Iowan Old Style", "Charter", "Georgia", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.55 var(--sans); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.top { display: flex; align-items: baseline; gap: 2rem; padding: 1.1rem 2rem; border-bottom: 1px solid var(--rule); }
+.brand { font: 600 1.15rem var(--serif); color: var(--ink); letter-spacing: .01em; }
+nav { display: flex; gap: 1.25rem; }
+nav a { color: var(--muted); }
+nav a.on { color: var(--ink); font-weight: 600; }
+main { max-width: 980px; margin: 0 auto; padding: 2rem; }
+.flash { background: #eef4f8; border-bottom: 1px solid #d6e3ec; padding: .6rem 2rem; color: var(--accent); }
+
+h1 { font: 600 1.8rem/1.2 var(--serif); margin: 0 0 1rem; }
+h2 { font: 600 1.25rem/1.3 var(--serif); margin: 2.2rem 0 .7rem; }
+.muted { color: var(--muted); }
+.small { font-size: .82rem; }
+.note { color: var(--muted); font-size: .9rem; max-width: 62ch; }
+.error { color: var(--bad); font-size: .82rem; margin-top: .2rem; max-width: 40ch; }
+
+/* report */
+.report { max-width: 700px; }
+.eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; color: var(--muted); margin: 0; }
+.meta { color: var(--muted); font-size: .85rem; margin: .2rem 0 1.5rem; }
+.prose { font: 1.06rem/1.65 var(--serif); }
+.prose h2 { border-top: 1px solid var(--rule); padding-top: 1.4rem; }
+.prose h3 { font: 600 .95rem var(--sans); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 1.6rem 0 .4rem; }
+.prose li { margin: .45rem 0; }
+.prose a { font: .72rem var(--sans); background: #eaf1f6; padding: .05rem .35rem; border-radius: 3px; white-space: nowrap; vertical-align: 1px; }
+.prose em { color: var(--muted); }
+.stats { border-top: 1px solid var(--rule); margin-top: 2.5rem; }
+
+/* tables */
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th { text-align: left; font-weight: 600; color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }
+th, td { padding: .55rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr.bad td:first-child { box-shadow: inset 3px 0 0 var(--bad); }
+.heatwrap { overflow-x: auto; }
+.heat td:first-child { white-space: nowrap; }
+.heat td.cell { background: rgba(var(--heat), calc(var(--a) * .85)); color: var(--ink); }
+.heat td.cell[style*="--a: 0.6"], .heat td.cell[style*="--a: 0.7"], .heat td.cell[style*="--a: 0.8"],
+.heat td.cell[style*="--a: 0.9"], .heat td.cell[style*="--a: 1"] { color: #fff; }
+
+/* lists */
+.list { padding-left: 1.1rem; }
+.list li { margin: .4rem 0; }
+.entries { list-style: none; padding: 0; }
+.entries li { padding: .9rem 0; border-bottom: 1px solid var(--rule); }
+.entries li.imp1 { opacity: .7; }
+.entries .line1 { display: flex; gap: .7rem; align-items: baseline; }
+.entries .src { font-weight: 600; font-size: .85rem; }
+.entries .head { display: block; font: 600 1.02rem/1.35 var(--serif); color: var(--ink); margin: .15rem 0; }
+.entries p { margin: .2rem 0; color: #3b3f44; }
+.tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .35rem; }
+.tags a { font-size: .75rem; background: #efede8; color: var(--muted); padding: .1rem .45rem; border-radius: 3px; }
+.filters { display: flex; gap: .6rem; margin-bottom: 1rem; }
+select { font: inherit; padding: .35rem .5rem; border: 1px solid var(--rule); border-radius: 4px; background: #fff; }
+
+button { font: 500 .9rem var(--sans); background: var(--ink); color: #fff; border: 0; border-radius: 4px; padding: .55rem .9rem; cursor: pointer; }
+button.small { font-size: .78rem; padding: .3rem .6rem; background: #fff; color: var(--ink); border: 1px solid var(--rule); }
+.actions { margin-top: 2rem; }
+
+@media (max-width: 640px) {
+  .top { flex-direction: column; gap: .5rem; padding: 1rem; }
+  main { padding: 1rem; }
+}
