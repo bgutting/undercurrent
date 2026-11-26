@@ -99,6 +99,13 @@ def record_check(source: str, ok: bool, error: str | None = None, new: int = 0,
         )
 
 
+def reset_source(source: str):
+    """Forget everything about a source so it gets collected from scratch."""
+    with conn() as c:
+        c.execute("DELETE FROM entries WHERE source=%s", (source,))
+        c.execute("DELETE FROM source_state WHERE source=%s", (source,))
+
+
 # --------------------------------------------------------------- entries ----
 
 def insert_entries(source: str, entries) -> int:

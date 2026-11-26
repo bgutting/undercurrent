@@ -8,12 +8,16 @@ class FetchError(Exception):
     pass
 
 
-def fetch(url: str, timeout: int = 30) -> str:
+PAGE_ACCEPT = "text/html,application/xhtml+xml,text/markdown,*/*;q=0.8"
+FEED_ACCEPT = "application/rss+xml,application/atom+xml,application/xml,text/xml;q=0.9,*/*;q=0.8"
+
+
+def fetch(url: str, timeout: int = 30, accept: str = PAGE_ACCEPT) -> str:
     req = urllib.request.Request(
         url,
         headers={
             "User-Agent": config.USER_AGENT,
-            "Accept": "text/html,application/xhtml+xml,application/xml,text/markdown,*/*;q=0.8",
+            "Accept": accept,
             "Accept-Language": "en-US,en;q=0.9",
         },
     )

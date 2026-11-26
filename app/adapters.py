@@ -184,12 +184,14 @@ def new_lines(previous: list[str], current: list[str]) -> list[str]:
     return [ln for ln in current if ln not in prev]
 
 
-def resolve_page_date(value: str | None, now: datetime) -> datetime | None:
+def resolve_page_date(value: str | None, now: datetime, first_run: bool = False) -> datetime | None:
     """Dates from the model come back as YYYY-MM-DD, YYYY-MM, or null.
 
-    A month-only date in the current month is treated as 'just now' (we
-    noticed it this week); an older month-only date goes mid-month so it
-    lands in roughly the right week of the trend history.
+    Month-only dates (some release notes only say "November 2026"):
+      - found on a later check, in the current month: it just appeared, so 'now'.
+      - found on the first collection: we can't tell when in the month it
+        shipped, so mid-month (never later than now). Otherwise a whole month
+        of backfill would land in "this week" and fake a spike.
     """
     if not value:
         return None
@@ -200,9 +202,9 @@ def resolve_page_date(value: str | None, now: datetime) -> datetime | None:
             return datetime(d.year, d.month, d.day, tzinfo=timezone.utc)
         if re.fullmatch(r"\d{4}-\d{2}", value):
             y, m = map(int, value.split("-"))
-            if (y, m) == (now.year, now.month):
+            if (y, m) == (now.year, now.month) and not first_run:
                 return now
-            return datetime(y, m, 15, tzinfo=timezone.utc)
+            return min(datetime(y, m, 15, tzinfo=timezone.utc), now)
     except ValueError:
         return None
     return None

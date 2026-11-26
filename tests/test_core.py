@@ -109,7 +109,8 @@ def test_page_lines_and_diff():
 
 def test_page_dates():
     assert adapters.resolve_page_date("2026-11-03", NOW).day == 3
-    assert adapters.resolve_page_date("2026-11", NOW) == NOW            # current month -> now
+    assert adapters.resolve_page_date("2026-11", NOW) == NOW            # current month, later check -> now
+    assert adapters.resolve_page_date("2026-11", NOW, first_run=True).day == 15   # backfill -> mid-month
     assert adapters.resolve_page_date("2026-09", NOW).day == 15         # older month -> mid-month
     assert adapters.resolve_page_date(None, NOW) is None
     assert adapters.resolve_page_date("soon", NOW) is None
@@ -217,7 +218,7 @@ def _pipeline_with_fakes(monkeypatch, page_html, extracted):
     sys.modules.pop("app.pipeline", None)
     monkeypatch.delattr(app, "pipeline", raising=False)
     from app import pipeline
-    monkeypatch.setattr(pipeline, "fetch", lambda url: page_html)
+    monkeypatch.setattr(pipeline, "fetch", lambda url, accept=None: page_html)
     monkeypatch.setattr(pipeline, "now_utc", lambda: NOW)
     calls = []
     def fake_extract(name, text, first, today):
@@ -238,7 +239,7 @@ def test_page_ingest_flow(monkeypatch):
     pipeline, fake, calls = _pipeline_with_fakes(monkeypatch, page1, extracted)
     assert pipeline.ingest("modal") == 1                  # undated item skipped on first run
     assert calls[0][0] is True
-    monkeypatch.setattr(pipeline, "fetch", lambda url: page2)
+    monkeypatch.setattr(pipeline, "fetch", lambda url, accept=None: page2)
     assert pipeline.ingest("modal") == 1
     assert calls[1][0] is False and "GPU memory snapshots." in calls[1][1]
     assert "Sandbox events UI." not in calls[1][1]         # only new lines sent

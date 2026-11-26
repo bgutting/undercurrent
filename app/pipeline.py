@@ -5,7 +5,7 @@ import re
 from datetime import datetime, timedelta, timezone
 
 from . import adapters, citations, config, db, llm, trends
-from .fetch import fetch
+from .fetch import FEED_ACCEPT, fetch
 from .sources import BY_KEY, SOURCES
 from .themes import THEMES
 
@@ -45,7 +45,7 @@ def _ingest_page(src: dict, html: str, now: datetime) -> tuple[list, str | None]
     items = llm.extract_entries(src["name"], text, first_run, now.date().isoformat())
     out = []
     for it in items:
-        when = adapters.resolve_page_date(it.get("date"), now)
+        when = adapters.resolve_page_date(it.get("date"), now, first_run)
         if when is None:
             if first_run:
                 continue    # undated items on the first pass are probably old; skip
@@ -67,7 +67,7 @@ def ingest(key: str) -> int:
     now = now_utc()
     snapshot = None
     try:
-        text = fetch(src["url"])
+        text = fetch(src["url"], accept=FEED_ACCEPT) if src["kind"] == "feed" else fetch(src["url"])
         if src["kind"] == "feed":
             raw = adapters.parse_feed(text)
         elif src["kind"] == "render":

@@ -147,6 +147,15 @@ def check_one(key: str):
     return back("/sources", f"Queued a check of {BY_KEY[key]['name']}.")
 
 
+@app.post("/actions/reset/{key}")
+def reset_one(key: str):
+    if key not in BY_KEY:
+        raise HTTPException(404)
+    db.reset_source(key)
+    jobs.enqueue({"type": "ingest", "source": key})
+    return back("/sources", f"Cleared {BY_KEY[key]['name']} and queued a fresh collection.")
+
+
 @app.post("/actions/report")
 def make_report():
     queued = jobs.enqueue({"type": "report"})

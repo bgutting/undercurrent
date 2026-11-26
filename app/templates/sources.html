@@ -15,7 +15,12 @@
       <td class="num">{{ s.state.last_new if s.state.last_checked else '–' }}</td>
       <td class="num">{{ s.counts.week }}</td>
       <td class="num">{{ s.counts.quarter }}</td>
-      <td><form method="post" action="/actions/check/{{ s.key }}"><button class="small">Check now</button></form></td>
+      <td class="btns">
+        <form method="post" action="/actions/check/{{ s.key }}"><button class="small">Check now</button></form>
+        <form method="post" action="/actions/reset/{{ s.key }}"
+              onsubmit="return confirm('Delete everything collected from {{ s.name }} and collect it again from scratch?')">
+          <button class="small quiet">Reset</button></form>
+      </td>
     </tr>
   {% endfor %}
   </tbody>
