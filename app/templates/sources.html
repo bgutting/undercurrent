@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Sources</h1>
-<p class="note">Checked every hour. A red row means the last check failed; the message says why.
+<p class="note">Checked every hour. A row marked in violet means the last check failed; the message says why.
   {% if queue is not none %}Jobs in the queue right now: {{ queue }}.{% endif %}</p>
 <table class="sources">
   <thead><tr><th>Source</th><th>Kind</th><th>Last checked</th><th class="num">New last check</th><th class="num">7 days</th><th class="num">90 days</th><th></th></tr></thead>

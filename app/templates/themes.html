@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Themes</h1>
-<p class="note">How often each theme was tagged, week by week, newest on the left. Darker means busier.
+<p class="note">How often each theme was tagged, week by week, newest on the left. Brighter means busier.
   {% if history < 4 %}<strong>Only about {{ history }} week(s) of history so far.</strong>{% endif %}</p>
 <div class="heatwrap">
 <table class="heat">
@@ -23,8 +23,8 @@
 </div>
 {% if rising %}
 <h2>Rising</h2>
-<ul class="list">
-{% for r in rising %}<li><a href="/entries?theme={{ r.theme }}">{{ r.theme }}</a>: {{ r.recent }} in the last two weeks vs. a usual {{ r.baseline }}, across {{ r.breadth }} compan{{ 'y' if r.breadth == 1 else 'ies' }}</li>{% endfor %}
+<ul class="list prose-list">
+{% for r in rising %}<li><a href="/entries?theme={{ r.theme }}">{{ r.theme }}</a>{% if loop.first and r.breadth >= 3 %}<span class="rt-tag rt-tag-flare flag">Surging</span>{% endif %}: {{ r.recent }} in the last two weeks vs. a usual {{ r.baseline }}, across {{ r.breadth }} compan{{ 'y' if r.breadth == 1 else 'ies' }}</li>{% endfor %}
 </ul>
 {% endif %}
 {% endblock %}
