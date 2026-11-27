@@ -16,14 +16,16 @@
   <li class="imp{{ e.importance or 0 }}">
     <div class="line1">
       <span class="src">{{ e.source_name }}</span>
-      <span class="muted small">{{ e.when.strftime('%b %d') }}{% if e.kind %} · {{ e.kind }}{% endif %}</span>
+      <span class="when">{{ e.when.strftime('%b %d') }}{% if e.kind %} · {{ e.kind }}{% endif %}</span>
     </div>
-    <a class="head" href="{{ e.url or '#' }}" target="_blank" rel="noopener">{{ e.headline or e.title }}</a>
-    {% if e.summary %}<p>{{ e.summary }}</p>{% elif not e.annotated_at %}<p class="muted small">Not tagged yet.</p>{% endif %}
-    {% if e.themes %}<div class="tags">{% for t in e.themes %}<a href="/entries?theme={{ t }}">{{ t }}</a>{% endfor %}</div>{% endif %}
+    <div class="card">
+      <a class="head" href="{{ e.url or '#' }}" target="_blank" rel="noopener">{{ e.headline or e.title }}</a>
+      {% if e.summary %}<p>{{ e.summary }}</p>{% elif not e.annotated_at %}<p class="muted">Not tagged yet.</p>{% endif %}
+      {% if e.themes %}<div class="tags">{% for t in e.themes %}<a href="/entries?theme={{ t }}">{{ t }}</a>{% endfor %}</div>{% endif %}
+    </div>
   </li>
   {% else %}
-  <li class="muted">Nothing here yet.</li>
+  <li class="empty">Nothing here yet.</li>
   {% endfor %}
 </ul>
 {% endblock %}

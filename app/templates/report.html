@@ -2,7 +2,8 @@
 {% block title %}Undercurrent · {{ stats.period }}{% endblock %}
 {% block content %}
 <article class="report">
-  <p class="eyebrow">Weekly report · {{ stats.period }}</p>
+  <p class="eyebrow">Weekly report</p>
+  <h1>{{ stats.period }}</h1>
   <p class="meta">{{ stats.entry_count }} entries from {{ active }} companies
     {% if stats.dropped_threads %} · {{ stats.dropped_threads }} unsupported thread{{ 's' if stats.dropped_threads != 1 }} removed{% endif %}</p>
 
@@ -17,7 +18,7 @@
       <thead><tr><th>Theme</th><th class="num">Last 2 wks</th><th class="num">Usual</th><th class="num">Change</th><th>Companies</th></tr></thead>
       <tbody>
       {% for r in stats.rising %}
-        <tr><td><a href="/entries?theme={{ r.theme }}">{{ r.theme }}</a></td><td class="num">{{ r.recent }}</td>
+        <tr><td><a href="/entries?theme={{ r.theme }}">{{ r.theme }}</a>{% if loop.first and r.breadth >= 3 %}<span class="rt-tag rt-tag-flare flag">Surging</span>{% endif %}</td><td class="num">{{ r.recent }}</td>
             <td class="num">{{ r.baseline }}</td><td class="num">×{{ r.ratio }}</td>
             <td>{{ r.breadth }} · <span class="muted">{{ r.sources | join(', ') }}</span></td></tr>
       {% endfor %}

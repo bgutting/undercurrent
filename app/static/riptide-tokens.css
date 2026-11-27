@@ -1,0 +1,119 @@
+/* Riptide — generated from tokens.json */
+
+:root, [data-theme="dark"] {
+  --canvas: #131313;
+  --surface-slate: #2d2d2d;
+  --surface-pressed: #8c8c8c;
+  --hairline: #ffffff;
+  --hairline-soft: #313131;
+  --ink: #ffffff;
+  --ink-muted: #949494;
+  --ink-on-slate: #e9e9e9;
+  --cerulean: #2fa8e8;
+  --on-cerulean: #000000;
+  --cerulean-ink: #5cbcf0;
+  --cerulean-deep: #0f4c6e;
+  --ultraviolet: #5200ff;
+  --on-ultraviolet: #ffffff;
+  --ultraviolet-ink: #a48bff;
+  --flare: #ff7a45;
+  --on-flare: #000000;
+  --flare-ink: #ff8a5c;
+  --ultraviolet-rule: #3d00bf;
+  --focus-ring: #ffffff;
+  --error: var(--ultraviolet-ink);
+  --overlay-ring: rgba(0,0,0,0.33);
+  --shadow-ring: 0 0 0 1px rgba(0,0,0,0.33);
+}
+
+[data-theme="light"] {
+  --canvas: #ffffff;
+  --surface-slate: #f2f2f2;
+  --surface-pressed: #c2c2c2;
+  --hairline: #131313;
+  --hairline-soft: #e1e1e1;
+  --ink: #131313;
+  --ink-muted: #6b6b6b;
+  --ink-on-slate: #2d2d2d;
+  --cerulean: #2fa8e8;
+  --on-cerulean: #000000;
+  --cerulean-ink: #0b6a9e;
+  --cerulean-deep: #0f4c6e;
+  --ultraviolet: #5200ff;
+  --on-ultraviolet: #ffffff;
+  --ultraviolet-ink: #5200ff;
+  --flare: #ff7a45;
+  --on-flare: #000000;
+  --flare-ink: #a83a16;
+  --ultraviolet-rule: #3d00bf;
+  --focus-ring: #5200ff;
+  --error: var(--ultraviolet-ink);
+  --overlay-ring: rgba(0,0,0,0.33);
+}
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --radius-xs: 2px;
+  --radius-image: 3px;
+  --radius-sm: 4px;
+  --radius-tile: 20px;
+  --radius-feature: 24px;
+  --radius-promo: 30px;
+  --radius-pill: 40px;
+  --radius-round: 50%;
+  --font-display: "Anton", "Manuka", Impact, sans-serif;
+  --font-sans: "Space Grotesk", "PolySans", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "PolySans Mono", "Courier New", monospace;
+  --font-serif: "Newsreader", "FK Roman Standard", Georgia, serif;
+}
+
+.display-hero { font-family: var(--font-display); font-size: 107px; line-height: 0.92; font-weight: 400; letter-spacing: 1.07px; }
+
+.display-2 { font-family: var(--font-display); font-size: 90px; line-height: 0.92; font-weight: 400; }
+
+.display-3 { font-family: var(--font-display); font-size: 60px; line-height: 0.95; font-weight: 400; }
+
+.headline-lg { font-family: var(--font-sans); font-size: 34px; line-height: 1.0; font-weight: 700; }
+
+.heading-wide { font-family: var(--font-sans); font-size: 32px; line-height: 1.1; font-weight: 400; letter-spacing: 0.32px; }
+
+.heading-md { font-family: var(--font-sans); font-size: 24px; line-height: 1.0; font-weight: 700; }
+
+.heading-sm { font-family: var(--font-sans); font-size: 20px; line-height: 1.0; font-weight: 700; }
+
+.body { font-family: var(--font-sans); font-size: 16px; line-height: 1.6; font-weight: 500; }
+
+.body-bold { font-family: var(--font-sans); font-size: 16px; line-height: 1.25; font-weight: 700; }
+
+.inline-label { font-family: var(--font-sans); font-size: 15px; line-height: 1.2; font-weight: 400; letter-spacing: 0.15px; }
+
+.body-compact { font-family: var(--font-sans); font-size: 13px; line-height: 1.6; font-weight: 400; }
+
+.eyebrow-light { font-family: var(--font-sans); font-size: 19px; line-height: 1.2; font-weight: 300; letter-spacing: 1.9px; }
+
+.kicker-xl { font-family: var(--font-sans); font-size: 18px; line-height: 1.1; font-weight: 400; letter-spacing: 1.8px; }
+
+.eyebrow { font-family: var(--font-sans); font-size: 12px; line-height: 1.3; font-weight: 400; letter-spacing: 1.8px; }
+
+.tag { font-family: var(--font-sans); font-size: 12px; line-height: 1.2; font-weight: 400; letter-spacing: 0.72px; }
+
+.byline { font-family: var(--font-sans); font-size: 11px; line-height: 1.2; font-weight: 400; letter-spacing: 1.1px; }
+
+.meta-nano { font-family: var(--font-sans); font-size: 10px; line-height: 1.4; font-weight: 500; letter-spacing: 1.5px; }
+
+.button-mono { font-family: var(--font-mono); font-size: 12px; line-height: 2.0; font-weight: 600; letter-spacing: 1.5px; }
+
+.timestamp { font-family: var(--font-mono); font-size: 11px; line-height: 1.2; font-weight: 500; letter-spacing: 1.5px; }
+
+.serif-body { font-family: var(--font-serif); font-size: 16px; line-height: 1.3; font-weight: 400; letter-spacing: -0.16px; }
+
+.serif-caption { font-family: var(--font-serif); font-size: 20px; line-height: 1.2; font-weight: 400; }
