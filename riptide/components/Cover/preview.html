@@ -1,0 +1,58 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Riptide</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--canvas); color:var(--ink); font-family:var(--font-sans); overflow:hidden; }
+  .cover { position:relative; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .cer { fill:var(--cerulean); }
+  .uv { fill:var(--ultraviolet); }
+  .spot { fill:var(--ink); }
+  .flare { fill:var(--flare); }
+  .tape { fill:var(--on-cerulean); }
+  .tile { rx:var(--radius-tile); }
+  .words { position:absolute; left:var(--space-6); bottom:var(--space-6); max-width:440px; }
+  .name { margin:0; font-family:var(--font-display); font-weight:400; font-size:104px; line-height:.92; letter-spacing:1px; color:var(--ink); }
+  .tag { margin:var(--space-5) 0 0 2px; font-size:14px; line-height:20px; color:var(--ink-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      cerulean 216×240 slab bled off the top (the accent, largest) · ultraviolet 120×200 bled off the top · ink spotlight 120×192 bleeding off the right · flare 120×48 satellite (rationed: it only means live) — ≈40% of 960×288
+  arrangement one tall cerulean slab with satellites, bottoms on one line space-6 above the edge, space-4 gutters
+  pattern     hazard stripes, from "accents behave like neon safety paint": 9 diagonal on-cerulean bands at a space-8 pitch cut into the base of the slab
+  scales      gutters space-4; stripe width space-4, pitch space-8; corners radius-tile
+-->
+<defs><clipPath id="slab"><rect x="24" y="-24" width="216" height="288" rx="20"/></clipPath></defs>
+<rect class="cer tile" x="24" y="-24" width="216" height="288" rx="20"/>
+<g clip-path="url(#slab)">
+  <polygon class="tape" points="0,232 16,232 48,200 32,200"/>
+  <polygon class="tape" points="32,232 48,232 80,200 64,200"/>
+  <polygon class="tape" points="64,232 80,232 112,200 96,200"/>
+  <polygon class="tape" points="96,232 112,232 144,200 128,200"/>
+  <polygon class="tape" points="128,232 144,232 176,200 160,200"/>
+  <polygon class="tape" points="160,232 176,232 208,200 192,200"/>
+  <polygon class="tape" points="192,232 208,232 240,200 224,200"/>
+  <polygon class="tape" points="224,232 240,232 272,200 256,200"/>
+  <polygon class="tape" points="256,232 272,232 304,200 288,200"/>
+</g>
+<rect class="uv tile" x="256" y="-24" width="120" height="224" rx="20"/>
+<rect class="flare tile" x="256" y="216" width="120" height="48" rx="20"/>
+<rect class="spot tile" x="392" y="72" width="120" height="192" rx="20"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Riptide</h1>
+<p class="tag">Loud, editorial, rationed color — cool water, one warm flare.</p>
+</div>
+</div>
+</body>
+</html>
